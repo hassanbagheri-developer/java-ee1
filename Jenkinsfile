@@ -1,22 +1,40 @@
 pipeline {
     agent any
     stages {
-        stage('Compile-Package'){
+        // stage('Compile-Package'){
+        //     steps {
+        //     git 'https://github.com/hassanbagheri-developer/java-ee1.git'
+        //     sh "./script.sh"
+        //     sh "/opt/maven/bin/mvn package"
+        //     sh "/opt/maven/bin/mvn clean compile"
+        //     sh "/opt/maven/bin/mvn package"
+        //     }
+        // }
+        
+        // stage('create image'){
+        //   steps {
+        //         sh "docker build . -t 192.168.56.133:5000/java/firstweb/firstweb_image:${BUILD_NUMBER}"
+        //         sh "docker push 192.168.56.133:5000/java/firstweb/firstweb_image:${BUILD_NUMBER}"
+        //         }
+        //     }
+            
+
+        
+        stage('Test selenium'){
+            agent { label 'myslave02'
+            }
             steps {
-            git 'https://github.com/hassanbagheri-developer/java-ee1.git'
-            sh "./script.sh"
-            sh "/opt/maven/bin/mvn package"
-            sh "/opt/maven/bin/mvn clean compile"
-            sh "/opt/maven/bin/mvn package"
+                try {
+                    python --version
+                    currentBuild.result = "SUCCESS"
+                    }
+                catch (exc) {
+                    currentBuild.result = "FAILURE"
+                    }
+            
             }
         }
         
-        stage('create image'){
-          steps {
-                sh "docker build . -t 192.168.56.133:5000/java/firstweb/firstweb_image:${BUILD_NUMBER}"
-                sh "docker push 192.168.56.133:5000/java/firstweb/firstweb_image:${BUILD_NUMBER}"
-                }
-            }
 
         // stage('Test API'){
         //      steps {
@@ -66,14 +84,14 @@ pipeline {
         //         }
         //     }
         
-        stage('Docker Swarm'){
-            agent { label 'swarm2'
-            }
-            steps {
-            // sh "docker service create --name firstweb_image -p 8080:8080 --mode global --with-registry-auth 192.168.56.133:5000/java/firstweb/firstweb_image:${BUILD_NUMBER}"
-                sh 'docker service update  --with-registry-auth --image 192.168.56.133:5000/java/firstweb/firstweb_image:${BUILD_NUMBER}  --update-parallelism 1 --update-delay 10s firstweb_image'
-            }
-        }
+        // stage('Docker Swarm'){
+        //     agent { label 'swarm2'
+        //     }
+        //     steps {
+        //     // sh "docker service create --name firstweb_image -p 8080:8080 --mode global --with-registry-auth 192.168.56.133:5000/java/firstweb/firstweb_image:${BUILD_NUMBER}"
+        //         sh 'docker service update  --with-registry-auth --image 192.168.56.133:5000/java/firstweb/firstweb_image:${BUILD_NUMBER}  --update-parallelism 1 --update-delay 10s firstweb_image'
+        //     }
+        // }
 
         // stage('JIRA') {
         //     steps {
