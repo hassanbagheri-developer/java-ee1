@@ -1,15 +1,15 @@
 pipeline {
     agent any
     stages {
-        // stage('Compile-Package'){
-        //     steps {
-        //     git 'https://github.com/hassanbagheri-developer/java-ee1.git'
-        //     sh "./script.sh"
-        //     sh "/opt/maven/bin/mvn package"
-        //     sh "/opt/maven/bin/mvn clean compile"
-        //     sh "/opt/maven/bin/mvn package"
-        //     }
-        // }
+        stage('Compile-Package'){
+            steps {
+            git 'https://github.com/hassanbagheri-developer/java-ee1.git'
+            sh "./script.sh"
+            sh "/opt/maven/bin/mvn package"
+            sh "/opt/maven/bin/mvn clean compile"
+            sh "/opt/maven/bin/mvn package"
+            }
+        }
         
         // stage('create image'){
         //   steps {
