@@ -11,7 +11,7 @@ driver = webdriver.Chrome(options=op)
 # driver = webdriver.Chrome(executable_path = 'chromedriver.exe')
 driver.get('http://demo.guru99.com/test/upload/')
 btn_upload = driver.find_element_by_id("uploadfile_0")
-btn_upload.send_keys('C:\\test.txt')
+# btn_upload.send_keys('C:\\test.txt')
 
 
 
